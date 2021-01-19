@@ -4,68 +4,68 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.RadioButton;
-import android.widget.Spinner;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.ex1.classes.Anime;
 
 import java.util.ArrayList;
 
 public class SecondActivity extends Activity {
 
-    ArrayList<String> arr = new ArrayList<>();
-    Spinner spnr;
+    ArrayList<Anime> animes;
+    Intent mainActivity;
+    Button addAnime;
+    Button btnMain;
+    EditText animeName;
+    EditText animeEps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            arr = extras.getStringArrayList("arr");
+
+        animes = getIntent().getParcelableArrayListExtra("animes");
+        if(animes == null){
+            animes = new ArrayList<>();
         }
+        mainActivity = new Intent(this, MainActivity.class);
 
-        ArrayAdapter<String> adp = new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line,arr);
+        animeName = (EditText) findViewById(R.id.animeName);
+        animeEps = (EditText) findViewById(R.id.animeEps);
+        addAnime = (Button) findViewById(R.id.btnAdd);
+        btnMain = (Button) findViewById(R.id.btnMain);
 
-        spnr = (Spinner)findViewById(R.id.spinner);
-        spnr.setAdapter(adp);
-        spnr.setOnItemSelectedListener(
-                new AdapterView.OnItemSelectedListener() {
+        ArrayAdapter<Anime> adp = new ArrayAdapter<Anime>(this,
+                android.R.layout.simple_dropdown_item_1line, animes);
 
-                    @Override
-                    public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                        int position = spnr.getSelectedItemPosition();
-                        Toast.makeText(getApplicationContext(),"You have selected "+ arr.get(+position),Toast.LENGTH_LONG).show();
-                    }
+        addAnime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = animeName.getText().toString();
+                int eps = Integer.parseInt(animeEps.getText().toString());
+                int id = animes.size();
 
-                    @Override
-                    public void onNothingSelected(AdapterView<?> arg0) {
-                        Toast.makeText(getApplicationContext(),"You have selected nothing",Toast.LENGTH_LONG).show();
-                    }
+                Anime anime = new Anime(name, eps, id);
+                animes.add(anime);
+                if (mainActivity.getParcelableArrayListExtra("animes") != null) {
+                    mainActivity.removeExtra("animes");
                 }
-        );
+                mainActivity.putParcelableArrayListExtra("animes", animes);
+                showMsg("Anime added!");
+            }
+        });
     }
 
-    public void goToMain(View View) {
-        Intent main = new Intent(this, MainActivity.class);
-        main.putExtra("arr", arr);
-        startActivity(main);
+    public void showMsg(String txt) {
+        Toast msg = Toast.makeText(getBaseContext(), txt, Toast.LENGTH_SHORT);
+        msg.show();
     }
 
-    public void onRadioButtonClicked(View view) {
-        boolean checked = ((RadioButton) view).isChecked();
-
-        switch(view.getId()) {
-            case R.id.radio_pirates:
-                if (checked)
-                    Toast.makeText(getApplicationContext(),"OnePiece",Toast.LENGTH_LONG).show();
-                break;
-            case R.id.radio_ninjas:
-                if (checked)
-                    Toast.makeText(getApplicationContext(),"Naruto",Toast.LENGTH_LONG).show();
-                break;
-        }
+    public void goToMain(View v) {
+        mainActivity.putParcelableArrayListExtra("animes", animes);
+        startActivity(mainActivity);
     }
 }

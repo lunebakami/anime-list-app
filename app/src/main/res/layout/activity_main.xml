@@ -2,58 +2,53 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <AutoCompleteTextView
-        android:id="@+id/autoCompleteTextView1"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="282dp"
-        android:layout_marginEnd="80dp"
-        android:layout_marginBottom="27dp"
-        android:ems="10"
-        android:hint="Type your anime"
-        android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/btnAdd"
+    <Button
+        android:id="@+id/btnAddAnime"
+        android:layout_width="325dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="43dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="43dp"
+        android:onClick="goToSecond"
+        android:text="@string/anime_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainText" />
+
+    <TextView
+        android:id="@+id/mainText"
+        android:layout_width="392dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/mainText"
+        android:textAlignment="center"
+        android:textSize="45sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddAnime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btnAdd"
-        android:layout_width="102dp"
-        android:layout_height="66dp"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="23dp"
-        android:layout_marginEnd="160dp"
-        android:layout_marginBottom="271dp"
-        android:text="Add Anime"
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="325dp"
+        android:layout_height="498dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginEnd="19dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/autoCompleteTextView1" />
+        app:layout_constraintTop_toBottomOf="@+id/mainText"
+        app:layout_constraintVertical_bias="0.872">
 
-    <Button
-        android:id="@+id/btnSecond"
-        android:layout_width="99dp"
-        android:layout_height="66dp"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="23dp"
-        android:layout_marginEnd="160dp"
-        android:layout_marginBottom="271dp"
-        android:text="Go to Second"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAdd"
-        app:layout_constraintVertical_bias="0.065" />
+    </ListView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
